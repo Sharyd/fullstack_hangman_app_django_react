@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'Mouse Memoirs';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(fonts/MouseMemoirs-Regular.ttf);
+    }
+}
+
+@layer components {
+    .heading-xl {
+        @apply font-mouse-memoirs text-xl font-semibold text-balance tracking-wider;
+    }
+    .heading-l {
+        @apply font-mouse-memoirs text-l font-semibold leading-tight tracking-wider;
+    }
+    .heading-m {
+        @apply font-mouse-memoirs text-m uppercase font-semibold leading-tight tracking-wider;
+    }
+    .heading-s {
+        @apply font-mouse-memoirs text-s uppercase  font-bold  leading-tight tracking-wider;
+    }
+    .paragraph {
+        @apply font-mouse-memoirs text-xs leading-relaxed tracking-wide;
+    }
+
+    .container-padding {
+        @apply px-4 py-2 sm:p-6 md:py-12 sm:px-12 md:px-16 2xl:px-36 3xl:px-48;
+    }
+}
+
+.text-gradient-stroke {
+    font-weight: bold;
+    background-image: linear-gradient(180deg, #67b6ff, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    display: inline-block;
+}
+
+.text-gradient-subtitle-stroke {
+    font-weight: bold;
+    background-color: #ffffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    display: inline-block;
+}
+
+.text-gradient-stroke::before,
+.text-gradient-subtitle-stroke::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 16px;
+    left: 14px;
+    z-index: -1;
+    color: #243041;
+    -webkit-text-stroke: 18px #243041;
+    background: none;
+}
+
+.text-gradient-stroke::after,
+.text-gradient-subtitle-stroke::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 18px;
+    left: 14px;
+    z-index: -2;
+    color: #243041;
+
+    -webkit-text-stroke: 25px #000; /* Black outer border */
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.pulse-animation {
+    display: inline-block;
+}
+
+.pulse-animation-animated {
+    animation: pulse 2s infinite;
+}
+
+.pulse-hover {
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.pulse-hover:hover {
+    animation: pulse 1.5s infinite;
+}
