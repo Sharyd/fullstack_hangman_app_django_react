@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import Card from './Card'
 import FadeInAnimation from '../animations/FadeInAnimation'
 
-type ModalPaths = 'modal-menu' | 'modal-win' | 'modal-lose'
+export type ModalPaths = 'modal-menu' | 'modal-end'
 
 interface ModalProps {
     path: ModalPaths

@@ -3,9 +3,12 @@ import Container from '../../components/ui/Container'
 import Header from './components/Header'
 import GuessWord from './components/GuessWord'
 import Keyboard from './components/Keyboard'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import data from '../../data/data.json'
 import { capitalize } from '../../utils/capitalize'
+import Modal, { ModalPaths } from '../../components/ui/Modal'
+import Card from '../../components/ui/Card'
+import ErrorBoundary from '../../components/ErrorBoundary'
 type LetterState = {
     letter: string
 }
@@ -27,19 +30,22 @@ const Game = () => {
         []
     )
     const { category: categoryParams } = useParams<{ category: string }>()
+    const navigate = useNavigate()
 
     const [categories] = React.useState<data>(data.categories)
     const [category, setCategory] = React.useState<Category[] | null>(null)
+    const [categoryName, setCategoryName] = React.useState<string>('')
     const [fullWord, setFullWord] = React.useState<string>('')
     const [wrongGuesses, setWrongGuesses] = React.useState<number>(0)
     const [heartPercentage, setHeartPercentage] = React.useState<number>(100)
+    const [gameState, setGameState] = React.useState<
+        'playing' | 'won' | 'lost'
+    >('playing')
 
     React.useEffect(() => {
         if (categoryParams) {
-            const selectedCategory = categories[capitalize(categoryParams)]
-            if (selectedCategory) {
-                setCategory(selectedCategory)
-            }
+            setCategoryName(capitalize(categoryParams))
+            setCategory(categories[categoryParams])
         }
     }, [categoryParams, categories])
 
@@ -71,30 +77,35 @@ const Game = () => {
         const percentage = (100 / 6) * wrongGuesses
         setHeartPercentage(100 - percentage)
     }
-
     const handleWinOrLose = () => {
-        if (!category) return
-        if (wrongGuesses === 6) {
-            alert('You lose')
+        if (wrongGuesses >= 6) {
+            setGameState('lost')
+            return
         }
 
-        const fullWordWithoutSpaces = fullWord.replace(/\s/g, '')
-
-        const guessedWord = guessedLetters
-            .map((gl) => gl.letter)
-            .join('')
-            .replace(/\s/g, '')
-
-        if (fullWordWithoutSpaces.toLowerCase() === guessedWord.toLowerCase()) {
-            alert('You win')
+        if (fullWord) {
+            const fullWordArray = fullWord.split('')
+            const guessedLettersArray = guessedLetters.map((gl) => gl.letter)
+            const isWin = fullWordArray.every((letter) =>
+                guessedLettersArray.includes(letter)
+            )
+            if (isWin) {
+                setGameState('won')
+            }
         }
     }
+
+    React.useEffect(() => {
+        if (gameState !== 'playing') {
+            navigate(`?modal-end=1`)
+        }
+    }, [gameState])
 
     React.useEffect(() => {
         handleSetHeartPercentage()
         const timeout = setTimeout(() => {
             handleWinOrLose()
-        }, 500)
+        }, 400)
 
         return () => clearTimeout(timeout)
     }, [wrongGuesses, guessedLetters])
@@ -115,25 +126,53 @@ const Game = () => {
         ])
     }
 
+    const handleResetGame = () => {
+        setGuessedLetters([])
+        setFullWord('')
+        setWrongGuesses(0)
+        setHeartPercentage(100)
+        setGameState('playing')
+        handleRandomFullWord()
+    }
+
     return (
-        <Container type="flex">
-            <Header
-                heartPercentage={heartPercentage}
-                category={categoryParams || ''}
-            />
-            <div className="flex flex-col gap-24 mt-10 md:mt-20 items-center justify-center">
-                <GuessWord
-                    fullWord={fullWord}
-                    guessedLetters={guessedLetters}
+        <ErrorBoundary>
+            <Container type="flex">
+                <Header
+                    heartPercentage={heartPercentage}
+                    category={categoryParams || ''}
                 />
-                <Keyboard
-                    onHandleCheckIfGuessed={handleCheckIfGuessed}
-                    onSetGuessedLetters={handleSetGuessedLetters}
-                    guessedLetters={guessedLetters}
-                    fullWord={fullWord}
-                />
-            </div>
-        </Container>
+                <div className="flex flex-col gap-6 md:gap-20 mt-10 md:mt-20 items-center justify-center">
+                    <GuessWord
+                        fullWord={fullWord}
+                        guessedLetters={guessedLetters}
+                    />
+                    <Keyboard
+                        onHandleCheckIfGuessed={handleCheckIfGuessed}
+                        onSetGuessedLetters={handleSetGuessedLetters}
+                        guessedLetters={guessedLetters}
+                        fullWord={fullWord}
+                    />
+                </div>
+            </Container>
+            <Modal path="modal-end" buttonEnd="Quit game">
+                <Card.Title>
+                    {gameState === 'won' ? 'You win' : 'You lose'}
+                </Card.Title>
+                <div className="flex flex-col gap-6 items-center sm:gap-10">
+                    <Card.Button
+                        onClick={handleResetGame}
+                        href={'/' + categoryName}
+                        variant={'primary'}
+                    >
+                        Play again
+                    </Card.Button>
+                    <Card.Button href="/pick-category" variant={'primary'}>
+                        New Category
+                    </Card.Button>
+                </div>
+            </Modal>
+        </ErrorBoundary>
     )
 }
 

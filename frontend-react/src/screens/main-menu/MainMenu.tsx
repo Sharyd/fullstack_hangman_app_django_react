@@ -26,26 +26,28 @@ const MainMenu = () => {
                 <Card.SubHeading top>The</Card.SubHeading>
                 <Card.Title>Hangman</Card.Title>
                 <Card.SubHeading bottom>Game</Card.SubHeading>
-                <PulsingAnimation
-                    
-                    isAnimated={
-                        clickedElement === 'howToPlay' ||
-                        clickedElement === 'play'
-                    }
-                >
-                    <Card.Button
-                        className="m-auto md:my-16"
-                        variant="play"
-                        Icon={() => <PlayIcon />}
-                        onClick={handlePlayClick}
-                    />
-                </PulsingAnimation>
-
-                <PulsingAnimation isAnimated={clickedElement === 'none'}>
-                    <Card.Button onClick={handleHowToPlayClick}>
-                        How to play
-                    </Card.Button>
-                </PulsingAnimation>
+                <FadeInAnimation delay={0.3}>
+                    <PulsingAnimation
+                        isAnimated={
+                            clickedElement === 'howToPlay' ||
+                            clickedElement === 'play'
+                        }
+                    >
+                        <Card.Button
+                            className="m-auto md:my-16"
+                            variant="play"
+                            Icon={() => <PlayIcon />}
+                            onClick={handlePlayClick}
+                        />
+                    </PulsingAnimation>
+                </FadeInAnimation>
+                <FadeInAnimation delay={0.6}>
+                    <PulsingAnimation isAnimated={clickedElement === 'none'}>
+                        <Card.Button onClick={handleHowToPlayClick}>
+                            How to play
+                        </Card.Button>
+                    </PulsingAnimation>
+                </FadeInAnimation>
             </Card>
         </FadeInAnimation>
     )

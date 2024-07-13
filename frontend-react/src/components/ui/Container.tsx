@@ -10,7 +10,7 @@ const containerVariants = cva('m-auto z-10 w-full container-padding', {
     variants: {
         containerType: {
             default: '',
-            flex: 'flex justify-center items-center flex-col gap-10 xl:gap-12',
+            flex: 'flex justify-center items-center flex-col gap-2',
             grid: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10',
         },
     },

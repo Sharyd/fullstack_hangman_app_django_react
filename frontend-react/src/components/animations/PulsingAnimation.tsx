@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { motion } from 'framer-motion'
 
@@ -11,13 +10,12 @@ type PulsingButtonProps = {
 const PulsingAnimation: React.FC<PulsingButtonProps> = ({
     children,
     isAnimated,
-    
 }) => {
     return (
         <motion.div
             initial={{ scale: 1 }}
             animate={{
-                scale: [1, 1.1, 1],
+                scale: [1, 1.07, 1],
                 transition: {
                     duration: isAnimated ? 2 : 0,
                     repeat: isAnimated ? Infinity : 0,

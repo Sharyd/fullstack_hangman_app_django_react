@@ -15,7 +15,7 @@ const ContainerButtonHeading = () => {
     }
 
     return (
-        <div className="flex flex-col lg:flex-row justify-between lg:mb-8 gap-10 2xl:mb-20 items-start lg:items-center w-full">
+        <div className="flex flex-col lg:flex-row justify-between lg:mb-8 gap-10 md:gap-0 2xl:mb-20 items-start lg:items-center w-full">
             <Button
                 onClick={handleBack}
                 className="pulse-hover"

@@ -32,6 +32,9 @@
     .container-padding {
         @apply px-4 py-2 sm:p-6 md:py-12 sm:px-12 md:px-16 2xl:px-36 3xl:px-48;
     }
+    .background-bg {
+        @apply bg-game-mobile-bg md:bg-game-tablet-bg xl:bg-game-desktop-bg bg-cover bg-center bg-no-repeat;
+    }
 }
 
 .text-gradient-stroke {

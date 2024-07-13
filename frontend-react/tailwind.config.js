@@ -51,6 +51,7 @@ export default {
                 'custom-dark-grey': '#243041',
                 gradientStart: '#67B6FF',
                 gradientEnd: '#ffffff',
+                'custom-error': '#ef4444',
             },
             textShadow: {
                 graffiti: `
