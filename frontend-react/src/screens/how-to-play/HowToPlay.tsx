@@ -29,12 +29,14 @@ const data = [
 const HowToPlay = () => {
     return (
         <Container type="flex">
-            <ContainerButtonHeading />
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 md:gap-10 ">
+            <ContainerButtonHeading size="l" title="How to play" />
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 md:gap-10">
                 {data.map((item) => (
                     <Card key={item.number}>
-                        <Card.Number>{item.number}</Card.Number>
-                        <Card.Title>{item.title}</Card.Title>
+                        <div className="flex sm:flex-col gap-4 sm:items-center sm:gap-3 ">
+                            <Card.Number>{item.number}</Card.Number>
+                            <Card.Title>{item.title}</Card.Title>
+                        </div>
                         <Card.Description>{item.description}</Card.Description>
                     </Card>
                 ))}

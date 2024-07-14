@@ -6,7 +6,7 @@ import Keyboard from './components/Keyboard'
 import { useNavigate, useParams } from 'react-router-dom'
 import data from '../../data/data.json'
 import { capitalize } from '../../utils/capitalize'
-import Modal, { ModalPaths } from '../../components/ui/Modal'
+import Modal from '../../components/ui/Modal'
 import Card from '../../components/ui/Card'
 import ErrorBoundary from '../../components/ErrorBoundary'
 type LetterState = {
@@ -24,6 +24,8 @@ type Category = {
     name: string
     selected: boolean
 }
+
+export const HEARTS = 6
 
 const Game = () => {
     const [guessedLetters, setGuessedLetters] = React.useState<LetterState[]>(
@@ -74,11 +76,11 @@ const Game = () => {
     }
 
     const handleSetHeartPercentage = () => {
-        const percentage = (100 / 6) * wrongGuesses
+        const percentage = (100 / HEARTS) * wrongGuesses
         setHeartPercentage(100 - percentage)
     }
     const handleWinOrLose = () => {
-        if (wrongGuesses >= 6) {
+        if (wrongGuesses >= HEARTS) {
             setGameState('lost')
             return
         }
@@ -100,7 +102,6 @@ const Game = () => {
             navigate(`?modal-end=1`)
         }
     }, [gameState])
-
     React.useEffect(() => {
         handleSetHeartPercentage()
         const timeout = setTimeout(() => {
@@ -139,10 +140,11 @@ const Game = () => {
         <ErrorBoundary>
             <Container type="flex">
                 <Header
+                    wrongGuesses={wrongGuesses}
                     heartPercentage={heartPercentage}
                     category={categoryParams || ''}
                 />
-                <div className="flex flex-col gap-6 md:gap-20 mt-10 md:mt-20 items-center justify-center">
+                <div className="flex flex-col gap-10 md:gap-20 mt-10 md:mt-20 items-center justify-center">
                     <GuessWord
                         fullWord={fullWord}
                         guessedLetters={guessedLetters}

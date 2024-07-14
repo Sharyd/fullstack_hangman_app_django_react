@@ -4,9 +4,16 @@ import { BackIcon } from '../icons/BackIcon'
 import useIsBreakpoint from '../../hooks/use-is-breakpoint'
 import { Heading } from '../ui/Heading'
 import { useNavigate } from 'react-router-dom'
-import PulsingAnimation from '../animations/PulsingAnimation'
 
-const ContainerButtonHeading = () => {
+type ContainerButtonHeadingProps = {
+    title: string
+    size?: 'xl' | 'l' | 'm' | 's'
+}
+
+const ContainerButtonHeading = ({
+    title,
+    size,
+}: ContainerButtonHeadingProps) => {
     const { isMobile, isTablet } = useIsBreakpoint()
     const navigate = useNavigate()
 
@@ -15,7 +22,7 @@ const ContainerButtonHeading = () => {
     }
 
     return (
-        <div className="flex flex-col lg:flex-row justify-between lg:mb-8 gap-10 md:gap-0 2xl:mb-20 items-start lg:items-center w-full">
+        <div className="flex flex-col lg:flex-row justify-between mb-8 gap-10 md:gap-0 2xl:mb-20 items-start lg:items-center w-full">
             <Button
                 onClick={handleBack}
                 className="pulse-hover"
@@ -27,7 +34,7 @@ const ContainerButtonHeading = () => {
                 )}
             />
 
-            <Heading className="m-auto" size="xl" title="How to play" />
+            <Heading className="m-auto" size={size || 'xl'} title={title} />
         </div>
     )
 }

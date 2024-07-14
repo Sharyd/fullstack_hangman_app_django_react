@@ -3,12 +3,12 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '../../utils/classNames'
 
 const letterVariants = cva(
-    'flex items-center justify-center font-bold heading-m rounded-2xl transition duration-150 ease-in-out',
+    'flex items-center justify-center font-bold heading-s sm:heading-m rounded-2xl transition duration-150 ease-in-out',
     {
         variants: {
             letterType: {
-                playable: 'w-24 h-24',
-                keyboard: 'w-20 h-20 px-6',
+                playable: 'w-12 h-12  sm:w-[5.5rem] sm:h-[5.5rem]',
+                keyboard: 'w-12 h-12  sm:w-20 sm:h-20 px-6',
             },
             letterState: {
                 default: '',

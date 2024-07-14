@@ -5,14 +5,18 @@ import HeartBar from './HeartBar'
 type HeaderProps = {
     category: string
     heartPercentage: number
+    wrongGuesses: number
 }
 
-const Header = ({ category, heartPercentage }: HeaderProps) => {
+const Header = ({ category, heartPercentage, wrongGuesses }: HeaderProps) => {
     return (
         <header className="w-full">
             <nav className="flex justify-between w-full ">
                 <Menu category={category} />
-                <HeartBar progress={heartPercentage} />
+                <HeartBar
+                    wrongGuesses={wrongGuesses}
+                    progress={heartPercentage}
+                />
             </nav>
         </header>
     )

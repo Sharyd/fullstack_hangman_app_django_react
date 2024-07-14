@@ -20,17 +20,17 @@
         @apply font-mouse-memoirs text-l font-semibold leading-tight tracking-wider;
     }
     .heading-m {
-        @apply font-mouse-memoirs text-m uppercase font-semibold leading-tight tracking-wider;
+        @apply font-mouse-memoirs text-m uppercase font-semibold leading-tight tracking-widest;
     }
     .heading-s {
         @apply font-mouse-memoirs text-s uppercase  font-bold  leading-tight tracking-wider;
     }
     .paragraph {
-        @apply font-mouse-memoirs text-xs leading-relaxed tracking-wide;
+        @apply font-mouse-memoirs text-xs tracking-normal leading-tight;
     }
 
     .container-padding {
-        @apply px-4 py-2 sm:p-6 md:py-12 sm:px-12 md:px-16 2xl:px-36 3xl:px-48;
+        @apply px-4 py-2 sm:p-4 md:py-0 sm:px-12 md:px-16 2xl:px-36 3xl:px-48;
     }
     .background-bg {
         @apply bg-game-mobile-bg md:bg-game-tablet-bg xl:bg-game-desktop-bg bg-cover bg-center bg-no-repeat;

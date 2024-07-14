@@ -78,10 +78,10 @@ export default {
                     'linear-gradient(180deg, #344ABA 0%, #001479 100%)',
             },
             fontSize: {
-                xl: '8rem',
+                xl: '6.5rem',
                 l: '5rem',
                 m: '3rem',
-                s: '2rem',
+                s: '1.8rem',
                 xs: '1.65rem',
             },
             boxShadow: {

@@ -1,6 +1,7 @@
 import React from 'react'
 import Letter from '../../../components/ui/Letter'
 import ShakeAnimation from '../../../components/animations/ShakeAnimation'
+import useIsBreakpoint from '../../../hooks/use-is-breakpoint'
 
 type LetterState = {
     letter: string
@@ -12,6 +13,8 @@ type GuessWordProps = {
 }
 
 const GuessWord: React.FC<GuessWordProps> = ({ fullWord, guessedLetters }) => {
+    const { isAllBreakpoints } = useIsBreakpoint()
+
     const displayWord = fullWord?.split('').map((letter) => {
         if (letter === ' ') return { type: 'space' }
 
@@ -33,13 +36,21 @@ const GuessWord: React.FC<GuessWordProps> = ({ fullWord, guessedLetters }) => {
             isShaking: false,
         }
     })
-
+    console.log(fullWord)
     return (
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 items-center">
             {displayWord.map((item, index) => {
                 if (item.type === 'space') {
-                    return <div key={index} className="w-8" />
+                    return isAllBreakpoints ? (
+                        <div
+                            key={index}
+                            className="w-full block my-1 md:my-1"
+                        />
+                    ) : (
+                        <div key={index} className="w-9" />
+                    )
                 }
+
                 return (
                     <ShakeAnimation
                         key={index}

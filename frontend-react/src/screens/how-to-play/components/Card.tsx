@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '../../../utils/classNames'
 
 const cardVariants = cva(
-    'h-full gap-6 md:gap-8 flex flex-col items-center w-full px-5 py-7 md:p-8 2xl:p-12 bg-custom-white shadow-md rounded-4xl',
+    'sm:h-full gap-6 md:gap-8 flex flex-col  sm:items-center justify-center w-full p-8 md:p-6 2xl:p-10 bg-custom-white shadow-md rounded-4xl',
     {
         variants: {
             cardType: {
@@ -34,13 +34,16 @@ type NumberProps = {
     className?: string
 }
 
-const numberVariants = cva('text-custom-blue font-bold heading-l', {
-    variants: {
-        numberType: {
-            default: '',
+const numberVariants = cva(
+    'text-custom-blue font-bold heading-s sm:heading-l',
+    {
+        variants: {
+            numberType: {
+                default: '',
+            },
         },
-    },
-})
+    }
+)
 
 Card.Number = ({ children, className }: NumberProps) => {
     return <h2 className={cn(numberVariants({ className }))}>{children}</h2>
@@ -51,7 +54,9 @@ type TitleProps = {
     className?: string
 }
 
-const titleVariants = cva('text-custom-dark-navy text-center heading-m')
+const titleVariants = cva(
+    'text-custom-dark-navy sm:text-center heading-s sm:heading-m'
+)
 
 Card.Title = ({ children, className }: TitleProps) => {
     return <h3 className={cn(titleVariants({ className }))}>{children}</h3>
@@ -62,7 +67,9 @@ type DescriptionProps = {
     className?: string
 }
 
-const descriptionVariants = cva('text-center text-custom-dark-navy paragraph')
+const descriptionVariants = cva(
+    'sm:text-center text-custom-dark-navy paragraph'
+)
 
 Card.Description = ({ children, className }: DescriptionProps) => {
     return <p className={cn(descriptionVariants({ className }))}>{children}</p>

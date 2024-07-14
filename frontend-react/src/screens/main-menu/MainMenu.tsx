@@ -34,7 +34,7 @@ const MainMenu = () => {
                         }
                     >
                         <Card.Button
-                            className="m-auto md:my-16"
+                            className="m-auto my-10 md:my-16"
                             variant="play"
                             Icon={() => <PlayIcon />}
                             onClick={handlePlayClick}

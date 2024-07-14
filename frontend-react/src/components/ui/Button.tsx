@@ -13,10 +13,10 @@ const buttonVariants = cva(
                 secondary:
                     'px-8 md:px-16 py-2 heading-s rounded-full shadow-customInnerOuterBottomSecondary bg-transparent bg-gradient-primary hover:bg-gradient-primary-hover text-custom-white',
                 tertiary:
-                    'p-4 md:p-7  rounded-full bg-gradient-primary shadow-customInnerBottom hover:bg-gradient-primary-hover',
+                    'p-4 md:p-7 rounded-full bg-gradient-primary shadow-customInnerBottom hover:bg-gradient-primary-hover',
                 category:
-                    ' px-12 sm:px-20 2xlpx-28 py-16 rounded-3xl heading-m shadow-customInnerOuterBottomTertiary hover:bg-custom-blue-light bg-custom-blue text-custom-white',
-                play: 'p-12 rounded-full bg-gradient-primary shadow-customInnerOuterBottomQuaternary hover:bg-gradient-primary-hover hover:from-custom-lightPink hover:to-custom-lightPurple flex items-center justify-center',
+                    ' px-10 py-6 sm:py-16 sm:px-20 rounded-3xl heading-s sm:heading-m shadow-customInnerOuterBottomTertiary hover:bg-custom-blue-light bg-custom-blue text-custom-white',
+                play: 'p-10 sm:p-12 rounded-full bg-gradient-primary shadow-customInnerOuterBottomQuaternary hover:bg-gradient-primary-hover hover:from-custom-lightPink hover:to-custom-lightPurple flex items-center justify-center',
             },
         },
         defaultVariants: {

@@ -5,7 +5,7 @@ import { Heading, SubHeading } from './Heading'
 import Button, { ButtonProps as CustomButtonProps } from './Button'
 
 const cardVariants = cva(
-    'bg-gradient-secondary relative rounded-6xl opacity-90 min-h-[450px] w-[375px] sm:min-w-[600px] m-auto justify-center flex items-center flex-col shadow-customInnerOuterBottomQuinary p-12',
+    'bg-gradient-secondary relative rounded-6xl opacity-90 min-h-[420px] md:min-h-[450px] w-[355px] sm:min-w-[600px] m-auto justify-center flex items-center flex-col shadow-customInnerOuterBottomQuinary p-12',
     {
         variants: {
             cardType: {
@@ -38,7 +38,7 @@ type TitleProps = {
 
 Card.Title = ({ children, className }: TitleProps) => {
     return (
-        <div className="absolute -top-20 md:-top-32">
+        <div className="absolute -top-16 sm:-top-24">
             <Heading title={children} className={className} />
         </div>
     )
@@ -53,9 +53,9 @@ type SubHeadingProps = {
 
 Card.SubHeading = ({ children, className, top, bottom }: SubHeadingProps) => {
     const positionClass = top
-        ? 'absolute -top-20 left-24 md:-top-32 md:left-40'
+        ? 'absolute -top-16 left-20 sm:-top-28 sm:left-40'
         : bottom
-        ? 'absolute top-2 right-16 md:-top-1 md:right-40 '
+        ? 'absolute top-4 right-16 sm:-top-0 sm:right-40 '
         : ''
     return (
         <div className={positionClass}>

@@ -6,7 +6,8 @@ const headingVariants = cva('font-bold text-center p-4 ', {
     variants: {
         size: {
             xl: 'heading-l sm:heading-xl text-gradient-stroke',
-            m: 'heading-s sm:heading-m md:heading-l text-custom-white',
+            l: 'heading-m sm:heading-xl text-gradient-stroke',
+            m: 'heading-s sm:heading-m lg:heading-l text-custom-white',
             s: 'heading-s  sm:heading-m text-gradient-subtitle-stroke',
         },
     },
