@@ -9,6 +9,7 @@ import { capitalize } from '../../utils/capitalize'
 import Modal from '../../components/ui/Modal'
 import Card from '../../components/ui/Card'
 import ErrorBoundary from '../../components/ErrorBoundary'
+import Hangman from './components/Hangman'
 type LetterState = {
     letter: string
 }
@@ -85,15 +86,22 @@ const Game = () => {
             return
         }
 
-        if (fullWord) {
-            const fullWordArray = fullWord.split('')
-            const guessedLettersArray = guessedLetters.map((gl) => gl.letter)
-            const isWin = fullWordArray.every((letter) =>
-                guessedLettersArray.includes(letter)
-            )
-            if (isWin) {
-                setGameState('won')
-            }
+        if (guessedLetters.length === 0) {
+            return
+        }
+
+        const fullWordArray = fullWord.toLowerCase().split('')
+        const guessedLettersSet = new Set(
+            guessedLetters.map((gl) => gl.letter.toLowerCase())
+        )
+        // Check if all letters in fullWord are in guessedLettersSet
+        const isWon = fullWordArray.every((letter) =>
+            guessedLettersSet.has(letter)
+        )
+        console.log(fullWordArray, guessedLettersSet, isWon)
+
+        if (isWon) {
+            setGameState('won')
         }
     }
 
@@ -144,11 +152,14 @@ const Game = () => {
                     heartPercentage={heartPercentage}
                     category={categoryParams || ''}
                 />
-                <div className="flex flex-col gap-10 md:gap-20 mt-10 md:mt-20 items-center justify-center">
-                    <GuessWord
-                        fullWord={fullWord}
-                        guessedLetters={guessedLetters}
-                    />
+                <div className="flex flex-col gap-16 sm:gap-32 md:gap-20 mt-12 sm:my-32 md:my-20 items-center justify-between">
+                    <div className="flex lg:max-h-60 max-w-[1000px] items-center gap-4 md:gap-4 justify-center">
+                        <GuessWord
+                            fullWord={fullWord}
+                            guessedLetters={guessedLetters}
+                        />
+                        <Hangman wrongGuesses={wrongGuesses} />
+                    </div>
                     <Keyboard
                         onHandleCheckIfGuessed={handleCheckIfGuessed}
                         onSetGuessedLetters={handleSetGuessedLetters}

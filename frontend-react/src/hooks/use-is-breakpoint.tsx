@@ -8,7 +8,7 @@ interface BreakpointState {
     isAllBreakpoints: boolean
 }
 
-const MOBILE_BREAKPOINT = 375
+const MOBILE_BREAKPOINT = 430
 const TABLET_BREAKPOINT = 768
 const LAPTOP_BREAKPOINT = 1024
 const SMALL_DESKTOP_BREAKPOINT = 1440

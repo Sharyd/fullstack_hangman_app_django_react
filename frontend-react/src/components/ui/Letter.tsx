@@ -7,7 +7,7 @@ const letterVariants = cva(
     {
         variants: {
             letterType: {
-                playable: 'w-12 h-12  sm:w-[5.5rem] sm:h-[5.5rem]',
+                playable: 'w-12 h-12  sm:w-[5rem] sm:h-[5rem]',
                 keyboard: 'w-12 h-12  sm:w-20 sm:h-20 px-6',
             },
             letterState: {

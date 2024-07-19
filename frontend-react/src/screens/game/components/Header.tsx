@@ -10,7 +10,7 @@ type HeaderProps = {
 
 const Header = ({ category, heartPercentage, wrongGuesses }: HeaderProps) => {
     return (
-        <header className="w-full">
+        <header className="w-full mb-auto h-full">
             <nav className="flex justify-between w-full ">
                 <Menu category={category} />
                 <HeartBar

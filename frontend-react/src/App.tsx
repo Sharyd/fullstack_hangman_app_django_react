@@ -5,7 +5,7 @@ import { AnimationProvider } from './store/AnimationContext'
 function App() {
     return (
         <AnimationProvider>
-            <main className="p-3 md:p-8 min-h-screen w-full items-center justify-center flex background-bg">
+            <main className="p-1 md:p-8 min-h-screen w-full  background-bg">
                 <RouterProvider router={router} />
             </main>
         </AnimationProvider>

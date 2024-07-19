@@ -36,7 +36,7 @@ const GuessWord: React.FC<GuessWordProps> = ({ fullWord, guessedLetters }) => {
             isShaking: false,
         }
     })
-    console.log(fullWord)
+   
     return (
         <div className="flex flex-wrap justify-center gap-2 sm:gap-4 items-center">
             {displayWord.map((item, index) => {
