@@ -1,22 +1,35 @@
 import Container from '../../components/ui/Container'
 import ContainerButtonHeading from '../../components/shared/ContainerButtonHeading'
-import data from '../../data/data.json'
-import { useState } from 'react'
 import Button from '../../components/ui/Button'
 import FadeInAnimation from '../../components/animations/FadeInAnimation'
+import { useFetchQuery } from '../../hooks/use-fetch-query'
+
+import Loading from '../../components/ui/Loading'
+import ErrorFallback from '../../components/ui/ErrorFallback'
 
 const PickCategory = () => {
-    const [categories, setCategories] = useState(data.categories || {})
+    const {
+        data: categories,
+        isLoading,
+        error,
+    } = useFetchQuery<Category[]>('/categories/', ['categories'])
+
+    if (isLoading) return <Loading />
+    if (error) return <ErrorFallback error={error} />
 
     return (
         <Container type="flex">
             <ContainerButtonHeading title="Pick a category" size="l" />
 
             <div className="grid grid-cols-1 xl:grid-cols-3 text-center gap-6 md:gap-10 w-full">
-                {Object.keys(categories).map((category, index) => (
-                    <Button variant={'category'} href={'/' + category}>
+                {categories?.map((category, index) => (
+                    <Button
+                        key={category.name}
+                        variant={'category'}
+                        href={'/' + category.name}
+                    >
                         <FadeInAnimation index={index}>
-                            {category}
+                            {category.name}
                         </FadeInAnimation>
                     </Button>
                 ))}

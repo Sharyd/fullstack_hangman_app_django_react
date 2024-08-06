@@ -5,7 +5,7 @@ import { Heading, SubHeading } from './Heading'
 import Button, { ButtonProps as CustomButtonProps } from './Button'
 
 const cardVariants = cva(
-    'bg-gradient-secondary relative rounded-6xl opacity-85 min-h-[420px] md:min-h-[450px] w-[355px] sm:min-w-[600px] m-auto justify-center flex items-center flex-col shadow-customInnerOuterBottomQuinary p-12',
+    'bg-gradient-secondary relative rounded-6xl opacity-95 min-h-[420px] md:min-h-[450px] w-[355px] sm:min-w-[600px] m-auto justify-center flex items-center flex-col shadow-customInnerOuterBottomQuinary p-12',
     {
         variants: {
             cardType: {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Container from '../../components/ui/Container'
 import Header from './components/Header'
 import GuessWord from './components/GuessWord'
@@ -10,18 +10,16 @@ import Modal from '../../components/ui/Modal'
 import Card from '../../components/ui/Card'
 import ErrorBoundary from '../../components/ErrorBoundary'
 import Hangman from './components/Hangman'
+import { useFetchQuery } from '../../hooks/use-fetch-query'
+import Loading from '../../components/ui/Loading'
+
+import ErrorFallback from '../../components/ui/ErrorFallback'
+
 type LetterState = {
     letter: string
 }
 
-type data = {
-    [key: string]: {
-        name: string
-        selected: boolean
-    }[]
-}
-
-type Category = {
+type Word = {
     name: string
     selected: boolean
 }
@@ -35,8 +33,6 @@ const Game = () => {
     const { category: categoryParams } = useParams<{ category: string }>()
     const navigate = useNavigate()
 
-    const [categories] = React.useState<data>(data.categories)
-    const [category, setCategory] = React.useState<Category[] | null>(null)
     const [categoryName, setCategoryName] = React.useState<string>('')
     const [fullWord, setFullWord] = React.useState<string>('')
     const [wrongGuesses, setWrongGuesses] = React.useState<number>(0)
@@ -45,86 +41,92 @@ const Game = () => {
         'playing' | 'won' | 'lost'
     >('playing')
 
-    React.useEffect(() => {
+    const {
+        data: words,
+        isLoading,
+        error,
+        refetch: refetchWords,
+    } = useFetchQuery<Word[]>(
+        `/words/${encodeURIComponent(categoryParams || '')}/`,
+        ['words', categoryParams],
+        { enabled: !!categoryParams }
+    )
+
+    useEffect(() => {
         if (categoryParams) {
             setCategoryName(capitalize(categoryParams))
-            setCategory(categories[categoryParams])
         }
-    }, [categoryParams, categories])
+    }, [categoryParams])
 
-    const handleRandomFullWord = () => {
-        if (category) {
-            const randomIndex = Math.floor(Math.random() * category.length)
-            setCategory((prev: any) => {
-                const newCategory = [...prev]
-                newCategory[randomIndex].selected = true
-                return newCategory
-            })
-
-            setFullWord(category[randomIndex].name)
+    const handleRandomFullWord = useCallback(() => {
+        if (words && words.length > 0) {
+            const unselectedWords = words.filter((word) => !word.selected)
+            const wordPool =
+                unselectedWords.length > 0 ? unselectedWords : words
+            const randomIndex = Math.floor(Math.random() * wordPool.length)
+            setFullWord(wordPool[randomIndex].name)
         }
-    }
+    }, [words])
 
-    const handleCheckIfGuessed = (letter: string) => {
-        if (fullWord.toLowerCase().includes(letter.toLowerCase())) {
-            return true
+    useEffect(() => {
+        if (words && !fullWord) {
+            handleRandomFullWord()
         }
+    }, [words, fullWord, handleRandomFullWord])
 
-        if (guessedLetters.find((gl) => gl.letter === letter)) {
-            return true
-        }
-        setWrongGuesses((prev) => prev + 1)
-    }
+    const handleCheckIfGuessed = useCallback(
+        (letter: string) => {
+            if (fullWord.toLowerCase().includes(letter.toLowerCase())) {
+                return true
+            }
+            if (!guessedLetters.some((gl) => gl.letter === letter)) {
+                setWrongGuesses((prev) => prev + 1)
+            }
+            return false
+        },
+        [fullWord, guessedLetters]
+    )
 
-    const handleSetHeartPercentage = () => {
-        const percentage = (100 / HEARTS) * wrongGuesses
-        setHeartPercentage(100 - percentage)
-    }
-    const handleWinOrLose = () => {
+    const handleSetHeartPercentage = useCallback(() => {
+        setHeartPercentage(100 - (100 / HEARTS) * wrongGuesses)
+    }, [wrongGuesses])
+
+    const handleGameStatus = useCallback(() => {
         if (wrongGuesses >= HEARTS) {
             setGameState('lost')
             return
         }
+        if (guessedLetters.length === 0) return
 
-        if (guessedLetters.length === 0) {
-            return
-        }
-
-        const fullWordArray = fullWord.toLowerCase().split('')
         const guessedLettersSet = new Set(
             guessedLetters.map((gl) => gl.letter.toLowerCase())
         )
-        // Check if all letters in fullWord are in guessedLettersSet
-        const isWon = fullWordArray.every((letter) =>
-            guessedLettersSet.has(letter)
-        )
-        console.log(fullWordArray, guessedLettersSet, isWon)
-
-        if (isWon) {
-            setGameState('won')
-        }
-    }
+        const isWon = fullWord
+            .toLowerCase()
+            .split('')
+            .every((letter) => guessedLettersSet.has(letter))
+        if (isWon) setGameState('won')
+    }, [wrongGuesses, guessedLetters, fullWord])
 
     React.useEffect(() => {
         if (gameState !== 'playing') {
             navigate(`?modal-end=1`)
         }
-    }, [gameState])
+    }, [gameState, navigate])
+
     React.useEffect(() => {
         handleSetHeartPercentage()
         const timeout = setTimeout(() => {
-            handleWinOrLose()
+            handleGameStatus()
         }, 400)
 
         return () => clearTimeout(timeout)
-    }, [wrongGuesses, guessedLetters])
-
-    React.useEffect(() => {
-        if (fullWord) {
-            return
-        }
-        handleRandomFullWord()
-    }, [category, fullWord])
+    }, [
+        wrongGuesses,
+        guessedLetters,
+        handleSetHeartPercentage,
+        handleGameStatus,
+    ])
 
     const handleSetGuessedLetters = (letter: string) => {
         setGuessedLetters((prev) => [
@@ -135,14 +137,17 @@ const Game = () => {
         ])
     }
 
-    const handleResetGame = () => {
+    const handleResetGame = useCallback(() => {
         setGuessedLetters([])
         setFullWord('')
         setWrongGuesses(0)
         setHeartPercentage(100)
         setGameState('playing')
         handleRandomFullWord()
-    }
+    }, [handleRandomFullWord])
+
+    if (isLoading) return <Loading />
+    if (error) return <ErrorFallback error={error} />
 
     return (
         <ErrorBoundary>

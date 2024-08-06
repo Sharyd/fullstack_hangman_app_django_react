@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-%(=-c80y4dk@7#k#fd-%-j6ssojay_x73f+!f67$wsf0eg36b-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "hangman_game",
+    "corsheaders",
     "rest_framework",
 ]
 
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "hangman_project.urls"
@@ -69,8 +71,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "hangman_project.wsgi.application"
+WSGI_APPLICATION = "hangman_project.wsgi.app"
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

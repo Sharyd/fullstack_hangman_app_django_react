@@ -21,23 +21,22 @@ const Hangman = ({ wrongGuesses }: HangmanProps) => {
             },
         }),
     }
-
-    const swing = {
+    const sway = {
         animate: {
-            rotate: [0, 2, -2, 2, -2, 3, -3, 2, -2, 0],
+            rotate: [0, 2, -2, 2, -2, 0],
+            y: [0, -2, 2, -2, 2, 0],
             transition: {
-                duration: 2.5,
+                duration: 4,
                 ease: 'easeInOut',
-                times: [0, 0.1, 0.3, 0.5, 0.7, 0.8, 0.9, 1],
+                times: [0, 0.2, 0.4, 0.6, 0.8, 1],
                 repeat: Infinity,
-                repeatDelay: 0.5,
             },
         },
     }
 
     return (
         <svg
-            className="absolute   xl:opacity-100 top-16 -right-4 md:right-0 md:top-32 w-24 h-24 md:w-80 md:h-80"
+            className="hidden xl:block absolute xl:opacity-100 -right-6 top-32 w-24 h-24 md:w-80 md:h-80"
             viewBox="0 0 250 200"
         >
             {/* Base and Vertical pole - these don't swing */}
@@ -121,9 +120,9 @@ const Hangman = ({ wrongGuesses }: HangmanProps) => {
 
             {/* Body parts */}
             <motion.g
-                variants={swing}
-                animate={wrongGuesses === HEARTS ? 'animate' : 'initial'}
-                // transformOrigin="60 20"
+                variants={sway}
+                animate={wrongGuesses > 3 ? 'animate' : 'initial'}
+                style={{ originX: '140px', originY: '20px' }}
             >
                 {/* Head */}
                 {wrongGuesses > 3 && (

@@ -41,7 +41,7 @@ function Modal({ path, children, buttonEnd, onClose, url }: ModalProps) {
     if (!isOpen) return null
 
     return ReactDOM.createPortal(
-        <dialog className="fixed  left-0 top-0 w-full h-full bg-black bg-opacity-60 z-[100] overflow-auto flex justify-center items-center">
+        <dialog className="fixed  left-0 top-0 w-full h-full bg-black bg-opacity-70 z-[100] overflow-auto flex justify-center items-center">
             <FadeInAnimation>
                 <Card className="flex flex-col gap-6 md:gap-2 pb-0">
                     {children}
