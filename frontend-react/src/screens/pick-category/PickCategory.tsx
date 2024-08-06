@@ -6,6 +6,7 @@ import { useFetchQuery } from '../../hooks/use-fetch-query'
 
 import Loading from '../../components/ui/Loading'
 import ErrorFallback from '../../components/ui/ErrorFallback'
+import { Category } from '../../utils/types'
 
 const PickCategory = () => {
     const {
