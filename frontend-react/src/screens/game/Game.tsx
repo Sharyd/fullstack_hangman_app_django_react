@@ -40,7 +40,7 @@ const Game = () => {
     const [gameState, setGameState] = React.useState<
         'playing' | 'won' | 'lost'
     >('playing')
-
+  
     const {
         data: words,
         isLoading,

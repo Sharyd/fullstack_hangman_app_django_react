@@ -16,7 +16,7 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <AnimationProvider>
-                <main className="p-2 md:p-8 min-h-screen md:flex flex-col items-center md:justify-center w-full background-bg">
+                <main className="p-2 md:p-8 min-h-screen  flex flex-col items-center justify-center w-full background-bg">
                     <RouterProvider router={router} />
                 </main>
             </AnimationProvider>

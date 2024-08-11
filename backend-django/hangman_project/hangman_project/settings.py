@@ -24,10 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-%(=-c80y4dk@7#k#fd-%-j6ssojay_x73f+!f67$wsf0eg36b-"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+ADMIN_USERNAME = os.environ.get("DJANGO_ADMIN_USERNAME", "admin")
+ADMIN_EMAIL = os.environ.get("DJANGO_ADMIN_EMAIL", "admin@example.com")
+ADMIN_PASSWORD = os.environ.get("DJANGO_ADMIN_PASSWORD", "Admin123*")
 
 # Application definition
 
