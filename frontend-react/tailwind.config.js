@@ -13,6 +13,9 @@ export default {
             '2xl': '1536px',
             '3xl': '1820px',
         },
+        fontFamily: {
+            'mouse-memoirs': ['"Mouse Memoirs"', 'sans-serif'],
+        },
         borderRadius: {
             none: '0',
             sm: '0.125rem',
