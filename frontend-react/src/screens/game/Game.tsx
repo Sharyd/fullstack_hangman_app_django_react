@@ -40,7 +40,7 @@ const Game = () => {
     const [gameState, setGameState] = React.useState<
         'playing' | 'won' | 'lost'
     >('playing')
-  
+
     const {
         data: words,
         isLoading,
@@ -77,6 +77,7 @@ const Game = () => {
     const handleCheckIfGuessed = useCallback(
         (letter: string) => {
             if (fullWord.toLowerCase().includes(letter.toLowerCase())) {
+                console.log(fullWord, letter)
                 return true
             }
             if (!guessedLetters.some((gl) => gl.letter === letter)) {
@@ -101,10 +102,17 @@ const Game = () => {
         const guessedLettersSet = new Set(
             guessedLetters.map((gl) => gl.letter.toLowerCase())
         )
-        const isWon = fullWord
-            .toLowerCase()
-            .split('')
-            .every((letter) => guessedLettersSet.has(letter))
+        const uniqueLettersInWord = new Set(
+            fullWord
+                .toLowerCase()
+                .split('')
+                .filter((char) => char !== ' ')
+        )
+
+        const isWon = Array.from(uniqueLettersInWord).every((letter) =>
+            guessedLettersSet.has(letter)
+        )
+
         if (isWon) setGameState('won')
     }, [wrongGuesses, guessedLetters, fullWord])
 
